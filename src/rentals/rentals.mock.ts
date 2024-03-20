@@ -1,4 +1,5 @@
 import { Rentals } from './rentals.interface';
+import { format } from 'date-fns';
 
 export const rentals: Rentals[] = [
   {
@@ -26,16 +27,14 @@ export const rentals: Rentals[] = [
     description: 'Modern apartment in the heart of the city.',
     images: [
       'https://images.pexels.com/photos/259602/pexels-photo-259602.jpeg',
-      'https://images.pexels.com/photos/3779522/pexels-photo-3779522.jpeg',
+      'https://images.pexels.com/photos/2922672/pexels-photo-2922672.jpeg',
     ],
   },
   {
     id: '4',
     propertyName: 'Lakefront Cottage',
-    cleaningDate: new Date('2024-03-15'),
+    cleaningDate: new Date('2024-03-6'),
     description: 'Charming cottage by the lake.',
-    images: [
-      'https://images.pexels.com/photos/2446842/pexels-photo-2446842.jpeg',
-    ],
+    images: ['https://wallpaperaccess.com/full/2315968.jpg'],
   },
 ];
