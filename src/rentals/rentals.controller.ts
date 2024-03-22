@@ -26,9 +26,9 @@ export class RentalsController {
   @UseInterceptors(FileInterceptor('images'))
   public postRentals(
     @Body() rental: any,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    console.log('API Hit: ', rental, 'File ::', file);
+    console.log('API Hit::: ', rental, 'File :', files);
     return this.rentalServices.postProperties(rental);
   }
 }
