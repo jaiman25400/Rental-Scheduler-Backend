@@ -11,6 +11,9 @@ import { RentalsService } from './rentals.service';
 import { Rentals } from './rentals.interface';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as path from 'path';
+import { rentals } from './rentals.mock';
 
 @Controller()
 export class RentalsController {
@@ -18,17 +21,41 @@ export class RentalsController {
 
   @Get()
   public getRentals() {
-    console.log('GET API');
+    console.log('GET API :');
     return this.rentalServices.getProperties();
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('images'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, files, cb) => {
+          cb(null, `${files.originalname}`);
+        },
+      }),
+    }),
+  )
   public postRentals(
-    @Body() rental: any,
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() rental: Rentals,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log('API Hit::: ', rental, 'File :', files);
+    console.log('API Hit::: ', rental);
+
+    const fileLink = `http://localhost:3000/${file.originalname}`;
+    console.log('File Link: ', fileLink);
+    // Include the file link in the rental object
+    if (!rental.images) {
+      rental.images = []; // Initialize the array if it's not already initialized
+    }
+    rental.images.push(fileLink); // Push the file link to the images array
+
+    const mockDataLength = rentals.length;
+    rental.id = (mockDataLength + 1).toString();
+
+    // Add the current date
+    rental.cleaningDate = new Date();
+    console.log('Rental :', rental);
     return this.rentalServices.postProperties(rental);
   }
 }
