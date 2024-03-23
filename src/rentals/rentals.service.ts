@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { rentals } from './rentals.mock';
+import { rentals, cleaningDB } from './rentals.mock';
 import { Rentals } from './rentals.interface';
 
 @Injectable()
@@ -12,5 +12,14 @@ export class RentalsService {
 
   public postProperties(data: Rentals) {
     return this.props.push(data);
+  }
+
+  public generateTeams() {
+    const cleans = cleaningDB.cleans;
+    const personnel = cleaningDB.personnel;
+
+    const teams = [];
+
+    return teams;
   }
 }
